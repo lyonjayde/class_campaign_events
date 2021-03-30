@@ -1,0 +1,55 @@
+---
+title: "Analysis"
+author: "Jayde Lyon"
+date: "March 30, 2020" 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(plotly)
+
+# some varying data for R - .rds , .Rdata , .rda : but rds is the best
+
+events <- readRDS("events_saved.rds")
+
+
+```
+
+## Intro
+
+```{r}
+
+# Two things to look for 
+
+events %>% 
+  group_by(cand_lastname) %>% 
+  count(cand_lastname) %>% 
+  arrange(desc(n))
+
+events <- events %>% 
+  mutate(year = year(date),
+         month = month(date),
+         day = day(date))
+
+events %>% 
+  group_by(month) %>% 
+  count(month) %>%
+  arrange(desc(n))
+
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
